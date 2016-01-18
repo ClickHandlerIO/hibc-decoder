@@ -1,0 +1,26 @@
+# Git Ignore
+
+# Package Files
+*.jar
+*.war
+*.ear
+
+# IntelliJ
+*.iml
+.idea/*
+!.idea/codeStyleSettings.xml
+
+# Generated Sources
+target
+*/target/
+*/out
+/build
+*/gwtweb/
+target/MANIFEST.MF
+out/*
+
+# Mac OS X
+*.DS_STORE
+
+# NPM
+node_modules
