@@ -1,5 +1,5 @@
 package hibcDecoder;
 
-public class HIBCTest {
+public class    HIBCTest {
     // TODO
 }
