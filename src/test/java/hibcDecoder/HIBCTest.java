@@ -16,7 +16,7 @@ public class HIBCTest extends GWTTestCase{
     public void testDecode() throws Exception {
 
 
-        Object scanner = HIBC.decode("+Z999009993020351 ");
+        Object scanner = new HIBC().decode("+Z999009993020351 ");
         assertNotNull(scanner);
 
 
