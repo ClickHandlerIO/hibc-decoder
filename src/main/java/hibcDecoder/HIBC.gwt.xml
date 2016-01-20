@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<module>
+<module rename-to="hibc">
     <inherits name='com.google.gwt.user.User'/>
     <inherits name="com.google.gwt.resources.Resources"/>
     <inherits name="com.google.gwt.logging.Logging"/>
     <inherits name="com.google.gwt.user.Debug"/>
+    <inherits name="elemental.Elemental"/>
 
     <source path="client"/>
     <source path="resources"/>
+    <entry-point class="hibcDecoder.client.Main"/>
 
 </module>

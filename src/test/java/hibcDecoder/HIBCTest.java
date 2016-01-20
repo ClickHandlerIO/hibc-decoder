@@ -3,6 +3,8 @@ package hibcDecoder;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.ScriptInjector;
 import com.google.gwt.junit.client.GWTTestCase;
+import hibcDecoder.client.HIBC;
+import hibcDecoder.client.Resources;
 
 public class HIBCTest extends GWTTestCase{
     @Override
@@ -14,6 +16,9 @@ public class HIBCTest extends GWTTestCase{
     public void testDecode() throws Exception {
 
 
+        Object scanner = HIBC.decode("+Z999009993020351 ");
+        assertNotNull(scanner);
+
 
     }
 
@@ -23,14 +28,14 @@ public class HIBCTest extends GWTTestCase{
 
 
     }
-
-    public class HIBCEntryPoint implements EntryPoint {
-        @Override
-        public void onModuleLoad() {
-//            final MomentGwtBundle bundle = MomentGwtBundle.INSTANCE;
-
-
-        }
-    }
+//
+//    public class HIBCEntryPoint implements EntryPoint {
+//        @Override
+//        public void onModuleLoad() {
+////            final MomentGwtBundle bundle = MomentGwtBundle.INSTANCE;
+//
+//
+//        }
+//    }
 
 }

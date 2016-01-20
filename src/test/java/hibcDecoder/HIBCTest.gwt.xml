@@ -4,6 +4,7 @@
     <inherits name='com.google.gwt.user.User'/>
     <inherits name="com.google.gwt.junit.JUnit"/>
     <inherits name="com.google.gwt.user.Debug"/>
+    <inherits name="elemental.Elemental"/>
 
     <source path=""/>
 
