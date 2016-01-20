@@ -14,7 +14,8 @@ public class Main implements EntryPoint {
         ScriptInjector.fromString(Resources.instance.underscore().getText()).setWindow(ScriptInjector.TOP_WINDOW).inject();
         ScriptInjector.fromString(Resources.instance.hibc().getText()).setWindow(ScriptInjector.TOP_WINDOW).inject();
 
-        Object scanner = HIBC.decode("+Z999009993020351");
+        // old js interop way of doing it
+        Object scanner = HIBC2.decode("+Z999009993020351");
         Browser.getWindow().getConsole().log(scanner);
     }
 }
