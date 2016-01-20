@@ -1,5 +1,7 @@
 package hibcDecoder.client;
 
+import java.sql.Date;
+
 /**
  * Created by admin on 1/19/16.
  */
@@ -111,12 +113,55 @@ public class HIBC2 {
             }
         }
 
-
-
+        decoded.uom = barcode.charAt(barcode.length() - 1) - '0';
+        barcode = barcode.substring(0, barcode.length() - 1);
+        if (barcode.isEmpty()) {
+            decoded.error = Error.INVALID_LINE_1;
+            return decoded;
+        }
+        decoded.product = barcode;
         return decoded;
     }
 
     private Decoded processLine2(Decoded decoded, Type line2, String barcode) {
+        decoded.type = line2;
+
+        if(barcode.length() > 0 && Character.isDigit(barcode.charAt(0))){
+            if(barcode.length() < 5){
+                decoded.error = Error.INVALID_DATE;
+                return decoded;
+            }
+            decoded.date = Date.valueOf(barcode.substring(0, 5)).toString();
+            // assign -  _.assign(decoded, decodeLotSerialCheckLink(barcode.substring(5), type, "lot", false));
+
+        } else if(barcode.length() > 2 && barcode.charAt(0) == '$' && Character.isDigit(barcode.charAt(1))){
+            //             _.assign(decoded, decodeLotSerialCheckLink(barcode.substring(1), type, "lot", false));
+        } else if(barcode.length() > 3 && barcode.substring(0, 2).equals("$+") && Character.isDigit(barcode.charAt(2))){
+            // _.assign(decoded, decodeLotSerialCheckLink(barcode.substring(2), type, "serial", false));
+        } else if(barcode.length() > 3 && barcode.substring(0, 2).equals("$$") && Character.isDigit(barcode.charAt(2))){
+            // _.assign(decoded, decodeLotSerialCheckLink(barcode.substring(2), type, "lot", true));
+            /*
+            if (!decoded.error) {
+                extractMomentFromString(decoded, "lot", "date");
+            }
+             */
+        } else if(barcode.length() > 3 && barcode.substring(0, 3).equals("$$+")){
+//            _.assign(decoded, decodeLotSerialCheckLink(barcode.substring(3), type, "serial", true));
+//            extractMomentFromString(decoded, "serial", "date");
+        } else {
+            decoded.error = Error.INVALID_BARCODE;
+        }
+
+        return decoded;
+    }
+
+    private Decoded decodeLotSerialCheckLink(String check, Type barcodeType, String propertyName, boolean hasQuantity){
+        if(check.isEmpty()){
+            decoded.error = Error.EMPTY_CHECK_CHARACTER;
+            return decoded;
+        }
+        // else clear decoded and create new stuff from variables
+
         return decoded;
     }
 
@@ -126,7 +171,13 @@ public class HIBC2 {
         String barcode;
         String labelerId;
         char check;
+        int uom;
+        String date;
         String product;
+    }
+
+    public Decoded getDecoded() {
+        return decoded;
     }
 
     public enum Type{
