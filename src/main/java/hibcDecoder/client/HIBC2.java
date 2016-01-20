@@ -120,6 +120,7 @@ public class HIBC2 {
             return decoded;
         }
         decoded.product = barcode;
+
         return decoded;
     }
 
@@ -132,21 +133,20 @@ public class HIBC2 {
                 return decoded;
             }
             decoded.date = Date.valueOf(barcode.substring(0, 5)).toString();
-            // assign -  _.assign(decoded, decodeLotSerialCheckLink(barcode.substring(5), type, "lot", false));
-
+            decoded = assign(decoded, decodeLotSerialCheckLink(barcode.substring(5), line2, "lot", false));
         } else if(barcode.length() > 2 && barcode.charAt(0) == '$' && Character.isDigit(barcode.charAt(1))){
-            //             _.assign(decoded, decodeLotSerialCheckLink(barcode.substring(1), type, "lot", false));
+            decoded = assign(decoded, decodeLotSerialCheckLink(barcode.substring(1), line2, "lot", false));
         } else if(barcode.length() > 3 && barcode.substring(0, 2).equals("$+") && Character.isDigit(barcode.charAt(2))){
-            // _.assign(decoded, decodeLotSerialCheckLink(barcode.substring(2), type, "serial", false));
+            decoded = assign(decoded, decodeLotSerialCheckLink(barcode.substring(2), line2, "serial", false));
         } else if(barcode.length() > 3 && barcode.substring(0, 2).equals("$$") && Character.isDigit(barcode.charAt(2))){
-            // _.assign(decoded, decodeLotSerialCheckLink(barcode.substring(2), type, "lot", true));
+            decoded = assign(decoded, decodeLotSerialCheckLink(barcode.substring(2), line2, "lot", true));
             /*
             if (!decoded.error) {
                 extractMomentFromString(decoded, "lot", "date");
             }
              */
         } else if(barcode.length() > 3 && barcode.substring(0, 3).equals("$$+")){
-//            _.assign(decoded, decodeLotSerialCheckLink(barcode.substring(3), type, "serial", true));
+            decoded = assign(decoded, decodeLotSerialCheckLink(barcode.substring(3), line2, "serial", true));
 //            extractMomentFromString(decoded, "serial", "date");
         } else {
             decoded.error = Error.INVALID_BARCODE;
@@ -155,23 +155,105 @@ public class HIBC2 {
         return decoded;
     }
 
-    private Decoded decodeLotSerialCheckLink(String check, Type barcodeType, String propertyName, boolean hasQuantity){
-        if(check.isEmpty()){
+    private Decoded decodeLotSerialCheckLink(String string, Type barcodeType, String propertyName, boolean hasQuantity){
+        if(string.isEmpty()){
             decoded.error = Error.EMPTY_CHECK_CHARACTER;
             return decoded;
         }
         // else clear decoded and create new stuff from variables
+        Decoded decoded = new Decoded();
+
+        decoded.lot = string;
+
+        if(hasQuantity){
+            string = extractQuantityFromString(decoded, string, "quantity");
+        }
+
+        // check character
+        decoded.check = string.charAt(string.length() - 1);
+        string = string.substring(0, string.length() - 1);
+
+        // LotOrSerial and LinkCharacter
+        if(barcodeType == Type.LINE_2){
+            if(string.isEmpty()){
+                decoded.error = Error.EMPTY_LINK_CHARACTER;
+                return decoded;
+            }
+            decoded.link = string.charAt(string.length() - 1);
+            decoded.property = PropertyType.fromString(propertyName);
+            decoded.propertyValue = string.substring(0, string.length() - 1);
+        } else {
+            decoded.property = PropertyType.fromString(propertyName);
+            decoded.propertyValue = string;
+        }
 
         return decoded;
     }
 
+
+    private String extractQuantityFromString(Decoded decoded, String string, String quantity) {
+
+        return string;
+    }
+
+    private Decoded assign(Decoded target, Decoded source){  // in theory could be varargs in the future, but not currently
+        // just assigns values in the second object to the first, if they exist
+        if(source.type != null){
+            target.type = source.type;
+        }
+        if(source.error != null){
+            target.error = source.error;
+        }
+        if(source.barcode != null){
+            target.barcode = source.barcode;
+        }
+        if(source.labelerId != null){
+            target.labelerId = source.labelerId;
+        }
+        if(source.check != null){
+            target.check = source.check;
+        }
+        if(source.link != null){
+            target.link = source.link;
+        }
+        if(source.property != null){
+            target.property = source.property;
+            if(source.propertyValue != null){
+                target.propertyValue = source.propertyValue;
+            }
+        }
+        if(source.lot != null){
+            target.lot = source.lot;
+        }
+        if(source.date != null){
+            target.date = source.date;
+        }
+        if(source.uom != null){
+            target.uom = source.uom;
+        }
+        if(source.quantity != null){
+            target.quantity = source.quantity;
+        }
+        if(source.product != null){
+            target.product = source.product;
+        }
+
+        return target;
+    }
+
+    // todo - analyze if better as list/map of keys and names for the various properties
     private class Decoded{
         Type type;
         Error error;
         String barcode;
         String labelerId;
-        char check;
-        int uom;
+        Character check;
+        Character link;
+        String lot;
+        PropertyType property; // used to determine the type of code it seems, lot, serial, link
+        String propertyValue;
+        Integer uom;
+        Integer quantity;
         String date;
         String product;
     }
@@ -191,6 +273,33 @@ public class HIBC2 {
             this.typeCode = typeCode;
         }
 
+    }
+
+    public enum PropertyType {  // can simplify with return Enum.valueOf(c, string.trim().toUpperCase());
+        LOT("lot"),
+        LINK("link"),
+        SERIAL("serial");
+
+        public String text;
+
+        PropertyType(String text) {
+            this.text = text;
+        }
+
+        public String getText() {
+            return text;
+        }
+
+        public static PropertyType fromString(String text){
+            if(text != null){
+                for(PropertyType prop : PropertyType.values()){
+                    if(text.equalsIgnoreCase(prop.text)){
+                        return prop;
+                    }
+                }
+            }
+            return null; // for not found/error, can make this fancier later, maybe an exception or something
+        }
     }
 
     public enum Error {
