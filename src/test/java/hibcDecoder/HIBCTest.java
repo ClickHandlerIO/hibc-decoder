@@ -7,16 +7,20 @@ import com.google.gwt.junit.client.GWTTestCase;
 public class HIBCTest extends GWTTestCase{
     @Override
     public String getModuleName() {
-        return null;
+        return "hibcDecoder.HIBCTest";
     }
 
     @org.junit.Test
     public void testDecode() throws Exception {
 
+
+
     }
 
     @org.junit.Test
     public void testIsMatch() throws Exception {
+
+
 
     }
 

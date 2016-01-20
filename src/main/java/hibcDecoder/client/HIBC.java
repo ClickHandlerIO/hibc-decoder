@@ -1,8 +1,6 @@
-package hibcDecoder;
+package hibcDecoder.client;
 
-import com.google.gwt.core.client.js.JsNamespace;
 import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
 @JsType(isNative = true)
