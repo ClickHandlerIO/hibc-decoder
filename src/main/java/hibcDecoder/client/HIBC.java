@@ -79,7 +79,6 @@ public class HIBC {
         }else if(lines.length == 2){
             decoded = processLine1(decoded, Type.CONCATENATED, lines[0]);
             decoded = assign(decoded, processLine2(new Decoded(), Type.CONCATENATED, lines[1] + potentialCheckAndLinkCharacters));
-
         } else {
             decoded.error = Error.INVALID_BARCODE;
             return decoded;

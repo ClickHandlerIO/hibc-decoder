@@ -17,11 +17,16 @@ public class HIBCTest extends TestCase {  // TestCase  GWTTestCase
     @Test
     public void testDecode() throws Exception {
 
-
+        // test single line barcode
         HIBC scanner = new HIBC();
         scanner.decode("+Z999009993020351 ");
         assertNotNull(scanner);
 
+        // test double line barcode
+        scanner = new HIBC();
+//        Decoded decodeTest = new Decoded();
+        scanner.decode("*+Z999009993020351/05271C");
+        assertNotNull(scanner);
 
     }
 
@@ -31,6 +36,22 @@ public class HIBCTest extends TestCase {  // TestCase  GWTTestCase
 
 
     }
+//    private class Decoded{
+//        Type type;
+//        Error error;
+//        String barcode;
+//        String labelerId;
+//        Character check;
+//        Character link;
+//        String lot;
+//        PropertyType property; // used to determine the type of code it seems, lot, serial, link
+//        String propertyValue;
+//        Integer quantity;
+//        Integer uom;
+//        String date;
+//        String product;
+//    }
+
 //
 //    public class HIBCEntryPoint implements EntryPoint {
 //        @Override
