@@ -8,7 +8,6 @@
     <inherits name="elemental.Elemental"/>
 
     <source path="client"/>
-    <source path="resources"/>
     <entry-point class="hibcDecoder.client.Main"/>
 
 </module>

@@ -2,27 +2,30 @@ package hibcDecoder;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.ScriptInjector;
-import com.google.gwt.junit.client.GWTTestCase;
+//import com.google.gwt.junit.client.GWTTestCase;
 import hibcDecoder.client.HIBC;
-import hibcDecoder.client.Resources;
+import junit.framework.TestCase;
+import org.junit.Test;
+//import hibcDecoder.client.Resources;
 
-public class HIBCTest extends GWTTestCase{
-    @Override
-    public String getModuleName() {
-        return "hibcDecoder.HIBCTest";
-    }
+public class HIBCTest extends TestCase {  // TestCase  GWTTestCase
+//    @Override
+//    public String getModuleName() {
+//        return "hibcDecoder.HIBC";
+//    }
 
-    @org.junit.Test
+    @Test
     public void testDecode() throws Exception {
 
 
-        Object scanner = new HIBC().decode("+Z999009993020351 ");
+        HIBC scanner = new HIBC();
+        scanner.decode("+Z999009993020351 ");
         assertNotNull(scanner);
 
 
     }
 
-    @org.junit.Test
+    @Test
     public void testIsMatch() throws Exception {
 
 
@@ -37,5 +40,7 @@ public class HIBCTest extends GWTTestCase{
 //
 //        }
 //    }
+    // action config is related to the hysterix configuration,
+    // remoteaction means we;re going to have some context on it, like a remote ocntext
 
 }

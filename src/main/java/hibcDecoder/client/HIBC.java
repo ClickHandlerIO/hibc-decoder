@@ -8,7 +8,7 @@ import java.sql.Date;
 public class HIBC {
 
     private String barcode;
-    private Decoded decoded;
+    private Decoded decoded = new Decoded();
 
     public HIBC() {
     }
@@ -23,6 +23,7 @@ public class HIBC {
 
     // can add try/ catch for barcode when calling this method for not a string
     public Decoded decode(String barcode){
+        this.barcode = barcode;
         decoded.barcode = barcode;
 
         if(barcode == null || barcode.isEmpty()){
@@ -65,7 +66,7 @@ public class HIBC {
         String potentialCheckAndLinkCharacters = barcode.substring(barcode.length() - 2);
         barcode = barcode.substring(0, barcode.length() - 2);
 
-        String[] lines = barcode.split("/");
+        String[] lines = barcode.split("[\\/]");
 
         if(lines.length == 1){
             if(Character.isLetter(lines[0].charAt(0))){
@@ -77,7 +78,7 @@ public class HIBC {
 
         }else if(lines.length == 2){
             decoded = processLine1(decoded, Type.CONCATENATED, lines[0]);
-
+            decoded = assign(decoded, processLine2(new Decoded(), Type.CONCATENATED, lines[1] + potentialCheckAndLinkCharacters));
 
         } else {
             decoded.error = Error.INVALID_BARCODE;
@@ -357,6 +358,20 @@ public class HIBC {
     public Decoded getDecoded() {
         return decoded;
     }
+
+//    public enum hibcProps{
+//        ERROR(1),
+//        LINE_1(2),
+//        LINE_2(3);
+//
+//        public int typeCode;
+//
+//        Type(int typeCode) {
+//            this.typeCode = typeCode;
+//        }
+//
+//    }
+
 
     public enum Type{
         CONCATENATED(1),
