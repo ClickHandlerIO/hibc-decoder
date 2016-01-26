@@ -8,7 +8,8 @@ import java.sql.Date;
 public class HIBC {
 
     private String barcode;
-    private Decoded decoded = new Decoded();
+//    private String line2;
+
 
     public HIBC() {
     }
@@ -23,7 +24,9 @@ public class HIBC {
 
     // can add try/ catch for barcode when calling this method for not a string
     public Decoded decode(String barcode){
+        Decoded decoded = new Decoded();
         this.barcode = barcode;
+
         decoded.barcode = barcode;
 
         if(barcode == null || barcode.isEmpty()){
@@ -222,12 +225,13 @@ public class HIBC {
     }
 
     private Decoded decodeLotSerialCheckLink(String string, Type barcodeType, String propertyName, boolean hasQuantity){
+        // clear decoded and create new stuff from variables
+        Decoded decoded = new Decoded();
+
         if(string.isEmpty()){
             decoded.error = Error.EMPTY_CHECK_CHARACTER;
             return decoded;
         }
-        // else clear decoded and create new stuff from variables
-        Decoded decoded = new Decoded();
 
         decoded.lot = string;
 
@@ -354,9 +358,9 @@ public class HIBC {
         String product;
     }
 
-    public Decoded getDecoded() {
-        return decoded;
-    }
+//    public Decoded getDecoded() {
+//        return decoded;
+//    }
 
 //    public enum hibcProps{
 //        ERROR(1),
