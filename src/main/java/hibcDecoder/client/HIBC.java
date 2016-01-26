@@ -11,18 +11,13 @@ import java.util.Date;
 public class HIBC {
 
     private String barcode;
+
+    // mainly for tests, can delete or comment out for production -todo remove after testing
+    private Decoded finalDecodedObject;
 //    private String line2;
 
 
     public HIBC() {
-    }
-
-    public String getBarcode() {
-        return barcode;
-    }
-
-    public void setBarcode(String barcode) {
-        this.barcode = barcode;
     }
 
     // can add try/ catch for barcode when calling this method for not a string
@@ -89,6 +84,9 @@ public class HIBC {
             decoded.error = Error.INVALID_BARCODE;
             return decoded;
         }
+
+        // mainly for tests, can delete or comment out for production -todo remove after testing
+        this.finalDecodedObject = decoded;
 
         return decoded;
 
@@ -183,7 +181,7 @@ public class HIBC {
 
         String dateFormat;
 
-        switch(hibcDateFormatKey){ // todo - double check date formats
+        switch(hibcDateFormatKey){
             case 0:
             case 1:
                 dateFormat = "MMyy";
@@ -364,23 +362,10 @@ public class HIBC {
         String product;
     }
 
-//    public Decoded getDecoded() {
-//        return decoded;
-//    }
-
-//    public enum hibcProps{
-//        ERROR(1),
-//        LINE_1(2),
-//        LINE_2(3);
-//
-//        public int typeCode;
-//
-//        Type(int typeCode) {
-//            this.typeCode = typeCode;
-//        }
-//
-//    }
-
+    // mainly for tests, can delete or comment out for production -todo remove after testing
+    public Decoded getDecoded() {
+        return this.finalDecodedObject;
+    }
 
     public enum Type{
         CONCATENATED(1),
