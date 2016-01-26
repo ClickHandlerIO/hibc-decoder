@@ -139,12 +139,10 @@ public class HIBC {
                 decoded.error = Error.INVALID_DATE;
                 return decoded;
             }
-            String dateFormat = "YYDDD";
-            DefaultDateTimeFormatInfo info = new DefaultDateTimeFormatInfo();
+            String dateFormat = "yyddd";
             DateTimeFormat dtf = new DateTimeFormat(dateFormat) {}; // odd trick so that you can use date time
             Date date = dtf.parse(barcode.substring(0, 5));
             decoded.date = dtf.format(date);
-//            decoded.date = Date.valueOf(barcode.substring(0, 5)).toString();
             decoded = assign(decoded, decodeLotSerialCheckLink(barcode.substring(5), line2, "lot", false));
         } else if(barcode.length() > 2 && barcode.charAt(0) == '$' && Character.isDigit(barcode.charAt(1))){
             decoded = assign(decoded, decodeLotSerialCheckLink(barcode.substring(1), line2, "lot", false));
@@ -188,22 +186,22 @@ public class HIBC {
         switch(hibcDateFormatKey){ // todo - double check date formats
             case 0:
             case 1:
-                dateFormat = "MMYY";
+                dateFormat = "MMyy";
                 break;
             case 2:
-                dateFormat = "MMDDYY";
+                dateFormat = "MMddyy";
                 break;
             case 3:
-                dateFormat = "YYMMDD";
+                dateFormat = "yyMMdd";
                 break;
             case 4:
-                dateFormat = "YYMMDDHH";
+                dateFormat = "yyMMddHH";
                 break;
             case 5:
-                dateFormat = "YYDDD";
+                dateFormat = "yyddd";
                 break;
             case 6:
-                dateFormat = "YYDDDHH";
+                dateFormat = "yydddHH";
                 break;
             case 7:
                 // no date here so can assign normal string
@@ -223,14 +221,10 @@ public class HIBC {
             return;
         }
 
-//        Date date = new Date(tempString.substring(0, dateFormat.length()), dateFormat);
-
         // convert date to string for decoded date property
         DateTimeFormat dtf = new DateTimeFormat(dateFormat) {}; // odd trick so that you can use date time
         Date date = dtf.parse(barcode.substring(0, 5));
         decoded.date = dtf.format(date);
-
-//        decoded.date = Date.valueOf(tempString.substring(0, dateFormat.length())).toString();
 
         decoded.propertyValue = tempString.substring(dateFormat.length());
 

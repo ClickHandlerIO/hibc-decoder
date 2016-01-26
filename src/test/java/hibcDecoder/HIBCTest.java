@@ -17,16 +17,14 @@ public class HIBCTest extends GWTTestCase {  // TestCase  GWTTestCase
     @Test
     public void testDecode() throws Exception {
 
-        // test double line barcode
+        // test single line barcode
         HIBC scanner = new HIBC();
-//        Decoded decodeTest = new Decoded();
-        scanner.decode("*+Z999009993020351/05271C");
+        scanner.decode("+Z999009993020351 ");
         assertNotNull(scanner);
 
-
-        // test single line barcode
+        // test double line barcodes and Date time format
         scanner = new HIBC();
-        scanner.decode("+Z999009993020351 ");
+        scanner.decode("*+Z999009993020351/05271C");
         assertNotNull(scanner);
 
 
