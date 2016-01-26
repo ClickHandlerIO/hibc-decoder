@@ -1,6 +1,9 @@
 package hibcDecoder.client;
 
-import java.sql.Date;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.i18n.client.DefaultDateTimeFormatInfo;
+
+import java.util.Date;
 
 /**
  * Created by admin on 1/19/16.
@@ -136,7 +139,12 @@ public class HIBC {
                 decoded.error = Error.INVALID_DATE;
                 return decoded;
             }
-            decoded.date = Date.valueOf(barcode.substring(0, 5)).toString();
+            String dateFormat = "YYDDD";
+            DefaultDateTimeFormatInfo info = new DefaultDateTimeFormatInfo();
+            DateTimeFormat dtf = new DateTimeFormat(dateFormat) {}; // odd trick so that you can use date time
+            Date date = dtf.parse(barcode.substring(0, 5));
+            decoded.date = dtf.format(date);
+//            decoded.date = Date.valueOf(barcode.substring(0, 5)).toString();
             decoded = assign(decoded, decodeLotSerialCheckLink(barcode.substring(5), line2, "lot", false));
         } else if(barcode.length() > 2 && barcode.charAt(0) == '$' && Character.isDigit(barcode.charAt(1))){
             decoded = assign(decoded, decodeLotSerialCheckLink(barcode.substring(1), line2, "lot", false));
@@ -159,7 +167,7 @@ public class HIBC {
         return decoded;
     }
 
-    private void extractMomentFromString(Decoded decoded, String property, String date) {
+    private void extractMomentFromString(Decoded decoded, String property, String dateString) {
         // could check property type with the type sent in, currently assumes the same because they are
         String tempString = decoded.propertyValue;
 
@@ -218,7 +226,11 @@ public class HIBC {
 //        Date date = new Date(tempString.substring(0, dateFormat.length()), dateFormat);
 
         // convert date to string for decoded date property
-        decoded.date = Date.valueOf(tempString.substring(0, dateFormat.length())).toString();
+        DateTimeFormat dtf = new DateTimeFormat(dateFormat) {}; // odd trick so that you can use date time
+        Date date = dtf.parse(barcode.substring(0, 5));
+        decoded.date = dtf.format(date);
+
+//        decoded.date = Date.valueOf(tempString.substring(0, dateFormat.length())).toString();
 
         decoded.propertyValue = tempString.substring(dateFormat.length());
 

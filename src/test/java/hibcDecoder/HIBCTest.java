@@ -2,17 +2,17 @@ package hibcDecoder;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.ScriptInjector;
-//import com.google.gwt.junit.client.GWTTestCase;
+import com.google.gwt.junit.client.GWTTestCase;
 import hibcDecoder.client.HIBC;
 import junit.framework.TestCase;
 import org.junit.Test;
 //import hibcDecoder.client.Resources;
 
-public class HIBCTest extends TestCase {  // TestCase  GWTTestCase
-//    @Override
-//    public String getModuleName() {
-//        return "hibcDecoder.HIBC";
-//    }
+public class HIBCTest extends GWTTestCase {  // TestCase  GWTTestCase
+    @Override
+    public String getModuleName() {
+        return "hibcDecoder.HIBCTest";
+    }
 
     @Test
     public void testDecode() throws Exception {
