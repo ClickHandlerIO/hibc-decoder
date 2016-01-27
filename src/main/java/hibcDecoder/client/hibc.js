@@ -155,7 +155,7 @@
         }
         var decoded = {};
 
-        decoded.lot = string;
+        decoded.lot = string;  // only in 1 place, do not think this is used again
         if (hasQty) {
             string = extractQuantityFromString(decoded, string, "quantity");
         }

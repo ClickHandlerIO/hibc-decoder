@@ -213,7 +213,7 @@ public class HIBC {
 
         // convert date to string for decoded date property
         DateTimeFormat dtf = new DateTimeFormat(dateFormat) {}; // odd trick so that you can use date time
-        Date date = dtf.parse(barcode.substring(0, 5));
+        Date date = dtf.parse(tempString.substring(0, dateFormat.length()));
         decoded.date = dtf.format(date);
 
         decoded.propertyValue = tempString.substring(dateFormat.length());
@@ -229,7 +229,8 @@ public class HIBC {
             return decoded;
         }
 
-        decoded.lot = string;
+        // todo - verify this does nothing as it does now, we have propertyValue for this or serial value
+//        decoded.lot = string;
 
         if(hasQuantity){
             string = extractQuantityFromString(decoded, string);
@@ -318,9 +319,9 @@ public class HIBC {
                 target.propertyValue = source.propertyValue;
             }
         }
-        if(source.lot != null){
-            target.lot = source.lot;
-        }
+//        if(source.lot != null){
+//            target.lot = source.lot;
+//        }
         if(source.date != null){
             target.date = source.date;
         }
@@ -345,7 +346,7 @@ public class HIBC {
         String labelerId;
         Character check;
         Character link;
-        String lot;
+//        String lot;         // todo - verify this does nothing as it does now, we have propertyValue for this or serial value
         PropertyType property; // used to determine the type of code it seems, lot, serial, link
         String propertyValue;
         Integer quantity;
@@ -377,9 +378,9 @@ public class HIBC {
             return link;
         }
 
-        public String getLot() {
-            return lot;
-        }
+//        public String getLot() {
+//            return lot;
+//        }
 
         public PropertyType getProperty() {
             return property;

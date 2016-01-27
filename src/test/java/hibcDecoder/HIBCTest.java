@@ -10,7 +10,9 @@ public class HIBCTest extends GWTTestCase {
 
     String labelerId = "Z999";
     String product = "00999302035";
+    String lot = "3C001";
     Character check = 'C';
+    Character link = 'L';
     int uom = 1;
 
     @Test
@@ -29,6 +31,22 @@ public class HIBCTest extends GWTTestCase {
         assertTrue(test.getUom().equals(uom));
         assertTrue(test.getCheck().equals(' '));
 
+        scanner = new HIBC();
+        test = scanner.decode("+$$09053C001 C");
+        assertNotNull(test);
+        assertEquals(test.getType(), HIBC.Type.LINE_2);
+        assertTrue(test.getPropertyValue().equals(lot));
+        assertTrue(test.getLink().equals(' '));
+        assertTrue(test.getCheck().equals(check));
+        assertNotNull(test.getDate());
+
+        scanner = new HIBC();
+        test = scanner.decode("+$$09053C001  ");
+        assertEquals(test.getType(), HIBC.Type.LINE_2);
+        assertTrue(test.getPropertyValue().equals(lot));
+        assertTrue(test.getLink().equals(' '));
+        assertTrue(test.getCheck().equals(' '));
+        assertNotNull(test.getDate());
 
 
         ////////////////////////////////////////////////////////////////////////////////
