@@ -12,11 +12,6 @@ public class HIBC {
 
     private String barcode;
 
-    // mainly for tests, can delete or comment out for production -todo remove after testing
-    private Decoded finalDecodedObject;
-//    private String line2;
-
-
     public HIBC() {
     }
 
@@ -84,9 +79,6 @@ public class HIBC {
             decoded.error = Error.INVALID_BARCODE;
             return decoded;
         }
-
-        // mainly for tests, can delete or comment out for production -todo remove after testing
-        this.finalDecodedObject = decoded;
 
         return decoded;
 
@@ -346,7 +338,7 @@ public class HIBC {
     }
 
     // todo - analyze if better as map of keys and values for the various properties
-    private class Decoded{
+    public class Decoded{
         Type type;
         Error error;
         String barcode;
@@ -360,11 +352,58 @@ public class HIBC {
         Integer uom;
         String date;
         String product;
-    }
 
-    // mainly for tests, can delete or comment out for production -todo remove after testing
-    public Decoded getDecoded() {
-        return this.finalDecodedObject;
+        public Type getType() {
+            return type;
+        }
+
+        public Error getError() {
+            return error;
+        }
+
+        public String getBarcode() {
+            return barcode;
+        }
+
+        public String getLabelerId() {
+            return labelerId;
+        }
+
+        public Character getCheck() {
+            return check;
+        }
+
+        public Character getLink() {
+            return link;
+        }
+
+        public String getLot() {
+            return lot;
+        }
+
+        public PropertyType getProperty() {
+            return property;
+        }
+
+        public String getPropertyValue() {
+            return propertyValue;
+        }
+
+        public Integer getQuantity() {
+            return quantity;
+        }
+
+        public Integer getUom() {
+            return uom;
+        }
+
+        public String getDate() {
+            return date;
+        }
+
+        public String getProduct() {
+            return product;
+        }
     }
 
     public enum Type{
