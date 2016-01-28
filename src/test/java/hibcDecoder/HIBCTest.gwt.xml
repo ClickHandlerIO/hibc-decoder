@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<module>
+    <inherits name='com.google.gwt.user.User'/>
+    <inherits name="com.google.gwt.junit.JUnit"/>
+    <inherits name="com.google.gwt.user.Debug"/>
+    <inherits name="elemental.Elemental"/>
+
+    <source path=""/>
+
+</module>
