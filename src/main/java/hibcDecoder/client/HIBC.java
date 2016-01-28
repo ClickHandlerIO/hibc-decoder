@@ -422,7 +422,7 @@ public class HIBC {
 
     public enum PropertyType {  // can simplify with return Enum.valueOf(c, string.trim().toUpperCase());
         LOT("lot"),
-        LINK("link"),
+//        LINK("link"),
         SERIAL("serial");
 
         public String text;
