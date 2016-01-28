@@ -2,9 +2,7 @@ package hibcDecoder;
 
 import com.google.gwt.junit.client.GWTTestCase;
 import hibcDecoder.client.HIBC;
-import junit.framework.TestCase;
 import org.junit.Test;
-//import hibcDecoder.client.Resources;
 
 public class HIBCTest extends GWTTestCase {
 
@@ -15,7 +13,6 @@ public class HIBCTest extends GWTTestCase {
     Character check = 'C';
     Character link = 'L';
     int uom = 1;
-
     int twoDigitQty = 24;
     int fiveDigitQuantity = 100;
 
@@ -829,7 +826,6 @@ public class HIBCTest extends GWTTestCase {
         assertTrue(test4.getCheck().equals(check));
         assertTrue(test4.getPropertyValue().equals(serial));
         assertNull(test4.getDate());
-
 
 
     }

@@ -229,9 +229,6 @@ public class HIBC {
             return decoded;
         }
 
-        // todo - verify this does nothing as it does now, we have propertyValue for this or serial value
-//        decoded.lot = string;
-
         if(hasQuantity){
             string = extractQuantityFromString(decoded, string);
         }
@@ -319,9 +316,6 @@ public class HIBC {
                 target.propertyValue = source.propertyValue;
             }
         }
-//        if(source.lot != null){
-//            target.lot = source.lot;
-//        }
         if(source.date != null){
             target.date = source.date;
         }
@@ -346,7 +340,6 @@ public class HIBC {
         String labelerId;
         Character check;
         Character link;
-//        String lot;         // todo - verify this does nothing as it does now, we have propertyValue for this or serial value
         PropertyType property; // used to determine the type of code it seems, lot, serial, link
         String propertyValue;
         Integer quantity;
@@ -377,10 +370,6 @@ public class HIBC {
         public Character getLink() {
             return link;
         }
-
-//        public String getLot() {
-//            return lot;
-//        }
 
         public PropertyType getProperty() {
             return property;
